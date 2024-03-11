@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 12:30:20 by crtorres          #+#    #+#             */
-/*   Updated: 2023/12/22 19:36:40 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:01:43 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		new_string = ft_strdup(s1);
 		return (free(s1), free(s2), new_string);
 	}
-	new_string = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	new_string = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!new_string)
 		return (NULL);
 	while (s1[++i])
@@ -44,5 +44,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[++j])
 		new_string[i + j] = s2[j];
 	new_string[i + j] = '\0';
+	if (s1)
+		free(s1);
 	return (new_string);
 }

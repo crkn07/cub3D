@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:37:40 by crtorres          #+#    #+#             */
-/*   Updated: 2024/02/29 15:46:07 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:17:51 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	num_max_rowsandcols(t_game *game, char *line)
 	}
 }
 
+
 void	ft_process_map(t_game *game)
 {
 	char	**line_sp;
@@ -107,12 +108,13 @@ void	ft_process_map(t_game *game)
 	i = 6;
 	line = ft_strdup(line_sp[6]);
 	while (line_sp[++i])
-		line = ft_strjointhree(line, "\n", line_sp[i]);
+	{
+		line = ft_strjoin(line, "\n");
+		line = ft_strjoin(line, line_sp[i]);
+	}
 	num_max_rowsandcols(game, line);
-	printf("rows es %d\n", game->rows_map);
-	printf("cols es %d\n", game->cols_map);
-	free(line);
 	start = ft_check_start_map(game, line_sp);
+	free(line);
 	ft_process_data_map(game, line_sp, start);
 	free_mtx(line_sp);
 }

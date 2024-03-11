@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 18:29:30 by crtorres          #+#    #+#              #
-#    Updated: 2024/02/29 14:50:52 by crtorres         ###   ########.fr        #
+#    Updated: 2024/03/11 17:21:44 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC_PATH = ./src
 DOT_O = _Objfiles
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 MINILIBX = -framework OpenGL -framework AppKit
 LIBFT = ./src/libft/libft.a
 MLX = ./mlx/libmlx.a
@@ -25,7 +25,9 @@ LIB = cub3d.h
 SRC = ft_cub3d.c\
 		ft_error.c\
 		ft_check_map.c\
+		ft_check_map_comp.c\
 		ft_functions_utils.c\
+		ft_move_keys.c\
 		ft_read_file.c\
 		ft_smaller_mlx.c\
 

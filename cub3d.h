@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/04 16:30:13 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:21:20 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,32 @@
 # define EAST		8
 # define WEST		9
 
+
+//*------------------------------//
+//	  * KEYBOARD SETTINGS *.     //
+//*------------------------------*//
+# define KEY_PRESS		2
+
+/* Clicking on the RED cross on the window frame */
+# define KEY_EXIT		17
+
+# define KEY_ESC			53
+# define KEY_RESET			15
+# define KEY_RETURN			36
+
+# define KEY_W				13
+# define KEY_A				0
+# define KEY_S				1
+# define KEY_D				2
+# define KEY_UP				126
+# define KEY_LEFT			123
+# define KEY_DOWN			125
+# define KEY_RIGHT			124
+
 typedef struct s_vector
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }	t_vector;
 
 typedef struct s_img
@@ -70,30 +92,41 @@ typedef struct s_img
 
 typedef struct s_game
 {
-	void		*mlx;
-	void		*win;
-	char		*map_file;
-	char		*line;
-	char		coord;
-	char		**data_map;
-	char		**map;
-	int			rows_map;
-	int			cols_map;
-	int			x_axys;
-	int			y_axys;
-	int			size;
-	t_vector	vect;
-	t_vector	dir;
-	t_vector	plane;
-	double		rotation;
-	t_img		*n_img;
-	t_img		*s_img;
-	t_img		*e_img;
-	t_img		*w_img;
+	void			*mlx;
+	void			*win;
+	void			*img;
+	void			*address;
+	char			*map_file;
+	char			*line;
+	char			coord;
+	char			**data_map;
+	char			**map;
+	int				rows_map;
+	int				cols_map;
+	int				bitpp;
+	int				endian;
+	int				lengh_line;
+	int				x_axys;
+	int				y_axys;
+	int				size;
+	int				move_keys;
+	int				rotate_keys;
+	int				side_keys;
+	int				turn_dir;
+	unsigned int	c;
+	unsigned int	f;
+	t_vector		vect;
+	t_vector		dir;
+	t_vector		plane;
+	double			rotation;
+	t_img			*n_img;
+	t_img			*s_img;
+	t_img			*e_img;
+	t_img			*w_img;
 }	t_game;
 
-//===SETTINGS COLORS===/
-//===Color font code===/
+//*===SETTINGS COLORS===*//
+//*===Color font code===*//
 # define BLACK   "\x1B[30m"
 # define RED     "\x1b[31m"
 # define GREEN   "\x1b[32m"
@@ -107,7 +140,7 @@ typedef struct s_game
 # define LBLUE   "\x1B[38;2;53;149;240m"
 # define LGREEN  "\x1B[38;2;17;245;120m"
 # define GRAY    "\x1B[38;2;176;174;174m"
-//===Color background code===/
+//*===Color background code===*//
 # define BG_BLACK   "\x1B[40m"
 # define BG_RED     "\x1B[41m"
 # define BG_GREEN   "\x1B[42m"
@@ -124,17 +157,28 @@ typedef struct s_game
 
 # define RESET   "\x1b[0m"
 
-int		close_game(t_game *game);
+//*===MAP===*//
 void	skip_spaces(char *str, int *i);
 void	ft_check_access(char *path);
-void	error_message(char *msg);
-void	exit_message(char *msg, t_game *game);
 int		check_extension(char *str, char *ext);
+void	ft_check_comp(t_game *game);
+void	ft_check_borders(t_game *game);
+void 	ft_check_textures(t_game *game);
 char	*read_and_stash(int fd, char *stash);
+void	alloc_map_mem(t_game *game);
 void	ft_read_file(t_game *game, char *file);
 void	ft_process_map(t_game *game);
-void 	ft_check_textures(t_game *game);
-t_img	*init_img(t_game *game, char *path);
 void	fill(t_game *game, int size, int current, int col);
+
+//*===GAME===*//
+int		close_game(t_game *game);
+t_img	*init_img(t_game *game, char *path);
+int		keypress(int keycode, t_game *game);
+int		key_release(int keycode, t_game *game);
+
+//*===MESSAGES===*//
+void	error_message(char *msg);
+void	exit_message(char *msg, t_game *game);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:12:55 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/04 16:29:28 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:38:12 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	skip_spaces(char *str, int *i)
 
 void	fill(t_game *game, int size, int current, int col)
 {
-	if (current < 0 || current > size || game->line[current] != '0' || game->line[current] != '0' || game->line[current] != '\0' || game->line[current] != 'X'
-		|| game->line[current] != game->coord)
+	if (current < 0 || current > size || (game->line[current] != '0'
+		&& game->line[current] != '1' && game->line[current] != '\0'
+		&& game->line[current] != 'X'
+		&& game->line[current] != game->coord))
 		error_message("map is not closed\n");
 	if (game->line[current] == '0')
 	{
