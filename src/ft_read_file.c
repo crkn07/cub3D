@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:28:09 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/11 17:03:29 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:39:47 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void	ft_check_textures(t_game *game)
 		if (game->data_map[i][j] && (game->data_map[i][j] == 'N' && game->data_map[i][j + 1] == 'O' && game->data_map[i][j + 2] == ' '))
 		{
 			path = ft_strstr(game->data_map[i], "./textures/");
-			//!ft_check_access(path);
-			//game->n_img = init_img(game, path);
+			ft_check_access(path);
+			game->n_img = init_img(game, path);
 		}
 		else if (game->data_map[i][j] && (game->data_map[i][j] == 'S' && game->data_map[i][j + 1] == 'O' && game->data_map[i][j + 2] == ' '))
 		{
