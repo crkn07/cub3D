@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/11 17:21:20 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:41:49 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@
 # define SOUTH		7
 # define EAST		8
 # define WEST		9
+
+# define SPEED		0.10
+# define ROTATIONSPEED		0.05
+# define PI		3.141592
 
 
 //*------------------------------//
@@ -103,7 +107,12 @@ typedef struct s_game
 	char			**map;
 	int				rows_map;
 	int				cols_map;
+	int				mapx;
+	int				mapy;
+	int				stepx;
+	int				stepy;
 	int				bitpp;
+	double			vision;
 	int				endian;
 	int				lengh_line;
 	int				x_axys;
@@ -118,6 +127,8 @@ typedef struct s_game
 	t_vector		vect;
 	t_vector		dir;
 	t_vector		plane;
+	t_vector		rays;
+	t_vector		distance;
 	double			rotation;
 	t_img			*n_img;
 	t_img			*s_img;

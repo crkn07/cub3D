@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 18:29:30 by crtorres          #+#    #+#              #
-#    Updated: 2024/03/11 17:21:44 by crtorres         ###   ########.fr        #
+#    Updated: 2024/03/13 13:53:06 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC_PATH = ./src
 DOT_O = _Objfiles
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 MINILIBX = -framework OpenGL -framework AppKit
 LIBFT = ./src/libft/libft.a
 MLX = ./mlx/libmlx.a

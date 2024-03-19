@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:45:04 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/11 17:22:00 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:51:44 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,96 @@ void	ft_init_game(t_game *game)
 		error_message("launch_window image failed\n");
 	game->address = (int *)mlx_get_data_addr(game->img, &game->bitpp, \
 			&game->lengh_line, &game->endian);
+	if (!game->address)
+		error_message("address image failed\n");
 	game->move_keys = -1;
 	game->rotate_keys = -1;
 	game->turn_dir = -1;
 }
 
-/* int	ft_raycasting(void *pointer)
+int	ft_raycast_formats(t_game *game)
 {
-	t_game	*game;
-	int i;
+	int 	i;
+	double	aux;
+	double	plane_aux;
 	
 	i = 0;
-	game = (void *)pointer;
+	if(game->move_keys == KEY_W)
+	{
+		if (game->data_map[(int)(game->vect.x + game->dir.x * SPEED)][(int)game->vect.y] == 0)
+			game->vect.x += game->dir.x * SPEED;
+		if (game->data_map[(int)game->vect.x][(int)(game->vect.y + game->dir.y * SPEED)] == 0)
+			game->vect.y += game->dir.y * SPEED;
+	}
+	if (game->move_keys == KEY_S)
+	{
+		if (game->data_map[(int)(game->vect.x - game->dir.x *SPEED)][(int)game->vect.y] == 0)
+			game->vect.x += game->dir.x * SPEED;
+		if (game->data_map[(int)game->vect.x][(int)(game->vect.y + game->dir.y *SPEED)] == 0)
+			game->vect.y += game->dir.y * SPEED;
+	}
+	if (game->move_keys == KEY_A)
+	{
+		if (game->data_map[(int)(game->vect.x - game->plane.x *SPEED)][(int)game->vect.y] == 0)
+			game->vect.x += game->dir.x * SPEED;
+		if (game->data_map[(int)game->vect.x][(int)(game->vect.y - game->plane.y * SPEED)] == 0)
+			game->vect.y += game->dir.y * SPEED;
+	}
+	if (game->move_keys == KEY_D)
+	{
+		if (game->data_map[(int)(game->vect.x - game->plane.x * SPEED)][(int)game->vect.y] == 0)
+			game->vect.x += game->dir.x * SPEED;
+		if (game->data_map[(int)game->vect.x][(int)(game->vect.y - game->plane.y * SPEED)] == 0)
+			game->vect.y += game->dir.y * SPEED;
+	}
+	if (game->move_keys == KEY_RIGHT)
+	{
+		game->rotate_keys = -1;
+		game->turn_dir = -1;
+		game->rotation = game->rotation + game->turn_dir * (ROTATIONSPEED * 180 / PI);
+		aux = game->dir.x;
+		game->dir.x = game->dir.x * cos(-ROTATIONSPEED) - game->dir.y * sin(-ROTATIONSPEED);
+		game->dir.y = aux * sin(-ROTATIONSPEED) - game->dir.y * cos(-ROTATIONSPEED);
+		plane_aux = game->plane.x;
+		game->plane.x = game->plane.x * cos(-ROTATIONSPEED) - game->plane.y * sin(-ROTATIONSPEED);
+		game->plane.y = game->plane.y * sin(-ROTATIONSPEED) - game->plane.y * cos(-ROTATIONSPEED);
+	}
+	if (game->move_keys == KEY_LEFT)
+	{
+		game->rotate_keys = -1;
+		game->turn_dir = 1;
+		game->rotation = game->rotation + game->turn_dir * (ROTATIONSPEED * 180 / PI);
+		aux = game->dir.x;
+		game->dir.x = game->dir.x * cos(ROTATIONSPEED) - game->dir.y * sin(ROTATIONSPEED);
+		game->dir.y = aux * sin(ROTATIONSPEED) - game->dir.y * cos(ROTATIONSPEED);
+		plane_aux = game->plane.x;
+		game->plane.x = game->plane.x * cos(ROTATIONSPEED) - game->plane.y * sin(ROTATIONSPEED);
+		game->plane.y = game->plane.y * sin(ROTATIONSPEED) - game->plane.y * cos(ROTATIONSPEED);
+	}
+}
+
+int	ft_raycasting(t_game *game)
+{
+	int	i;
 	
-} */
-void	ft_leaks(void)
+	i = 0;
+	while (i < W_WIDTH)
+	{
+		game->vision = 2.0 * i / (double)W_WIDTH -1;
+		game->rays.x = game->dir.x + game->plane.x + game->vision;
+		game->rays.y = game->dir.y + game->plane.y + game->vision;
+	}
+}
+/* void	ft_leaks(void)
 {
 	system("leaks -q cub3d");
-}
+} */
 
 int	main(int argc, char **argv)
 {
 	t_game	*game;
 
-	atexit(ft_leaks);
+	//atexit(ft_leaks);
 	if (argc != 2)
 		return (perror("invalid number of arguments"), 1);
 	game = ft_calloc(1, sizeof(t_game));
@@ -76,6 +142,7 @@ int	main(int argc, char **argv)
 	ft_check_comp(game);
 	ft_check_borders(game);
 	ft_init_game(game);
+	exit(EXIT_FAILURE);
 	mlx_hook(game->win, KEY_EXIT, 0, &close_game, game);
 	mlx_hook(game->win, KEY_PRESS, 0, &keypress, game);
 	mlx_hook(game->win, KEY_PRESS, 0, &key_release, game);

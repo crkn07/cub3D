@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:28:09 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/12 15:39:47 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:49:39 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,20 +101,22 @@ void	ft_check_textures(t_game *game)
 		else if (game->data_map[i][j] && (game->data_map[i][j] == 'S' && game->data_map[i][j + 1] == 'O' && game->data_map[i][j + 2] == ' '))
 		{
 			path = ft_strstr(game->data_map[i], "./textures/");
-			//!ft_check_access(path);
-			//game->s_img = init_img(game, path);
+			ft_check_access(path);
+			game->s_img = init_img(game, path);
 		}
 		else if (game->data_map[i][j] && (game->data_map[i][j] == 'W' && game->data_map[i][j + 1] == 'E' && game->data_map[i][j + 2] == ' '))
 		{
 			path = ft_strstr(game->data_map[i], "./textures/");
-			//!ft_check_access(path);
-			//game->e_img = init_img(game, path);
+			aux = ft_split(path, ' ');
+			ft_check_access(*aux);
+			game->e_img = init_img(game, *aux);
+			free_mtx(aux);
 		}
 		else if (game->data_map[i][j] && (game->data_map[i][j] == 'E' && game->data_map[i][j + 1] == 'A' && game->data_map[i][j + 2] == ' '))
 		{
 			path = ft_strstr(game->data_map[i], "./textures/");
-			//!ft_check_access(path);
-			//game->w_img = init_img(game, path);
+			ft_check_access(path);
+			game->w_img = init_img(game, path);
 		}
 		else if (game->data_map[i][j] && (game->data_map[i][j] == 'F' && game->data_map[i][j + 1] == ' '))
 		{
@@ -124,6 +126,7 @@ void	ft_check_textures(t_game *game)
 			path = ft_strdup(&game->data_map[i][j]);
 			aux = ft_split(path, ',');
 			k = ft_ctoascii(aux);
+			//free (*aux);
 			free(path);
 			game->f = ft_print_color(k);
 			free (k);
@@ -136,6 +139,7 @@ void	ft_check_textures(t_game *game)
 			path = ft_strdup(&game->data_map[i][j]);
 			aux = ft_split(path, ',');
 			k = ft_ctoascii(aux);
+			//free (*aux);
 			free(path);
 			game->c = ft_print_color(k);
 			free (k);

@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_mtx.c                                      :+:      :+:    :+:   */
+/*   ft_dda.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 15:34:10 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/13 13:09:08 by crtorres         ###   ########.fr       */
+/*   Created: 2024/03/18 14:54:35 by crtorres          #+#    #+#             */
+/*   Updated: 2024/03/18 16:22:11 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../cub3d.h"
 
-void	free_mtx(char **mtx)
+void	ft_algorithm(t_game *game)
 {
-	int	i;
+	int	flag;
 
-	i = 0;
-	if (!mtx)
-		return ;
-	while (mtx[i])
+	game->mapx = (int)game->vect.x;
+	game->mapy = (int)game->vect.y;
+	game->distance.x = 1e30;
+	if (game->distance.x != 0)
+		game->distance.x = fabs(1.0 / game->rays.x);
+	game->distance.y = 1e30;
+	if (game->distance.y != 0)
+		game->distance.y = fabs(1.0 / game->rays.y);
+	game->stepx = 1;
+	if (game->rays.x < 0)
 	{
-		free(mtx[i]);
-		mtx[i] = NULL;
-		i++;
+		game->stepx = game->stepx * -1;
+		
 	}
-	free(mtx);
-	mtx = NULL;
 }

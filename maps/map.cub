@@ -1,7 +1,7 @@
-    NO ./textures/cañamo1.xpm
-    SO       ./textures/cristal1.xpm
-    WE ./textures/madera-verde1.xpm       
-    EA ./textures/madera1.xpm
+    NO ./textures/cañamo.xpm
+    SO       ./textures/verde.xpm
+    WE ./textures/cristal.xpm      
+    EA ./textures/madera.xpm
     F      0,126,100       
     C  120,128,100       
 
