@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:45:04 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/20 18:10:40 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:56:02 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ int	ft_raycasting(t_game *game)
 		if (game->d_end >= W_HEIGHT)
 			game->d_end = W_HEIGHT - 1;
 		ft_ray_line(game, i);
-		
+		update_textures(game, i);
+		i++;
 	}
 }
 /* void	ft_leaks(void)

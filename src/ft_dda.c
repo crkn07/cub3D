@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:54:35 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/21 12:57:40 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:05:01 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,38 @@ void	ft_ray_line(t_game *game, int i)
 	while (++j < W_HEIGHT)
 		game->address[j * W_WIDTH + 1] = game->f;
 }
+int	ft_choose_color(t_game *game)
+{
+	int	color;
+
+	color = 0;
+	if (game->hit_side == 0 && game->rays.x > 0)
+		color = *(game->n_img->data + (game->x_axys * game->textwallx * game->textwally));
+	if (game->hit_side == 0 && game->rays.x < 0)
+		color = *(game->s_img->data - (game->x_axys * game->textwallx * game->textwally));
+	if (game->hit_side == 1 && game->rays.x > 0)
+		color = *(game->e_img->data + (game->y_axys * game->textwallx));
+	if (game->hit_side == 1 && game->rays.x < 0)
+		color = *(game->w_img->data - (game->y_axys * game->textwallx));
+	return (color);
+}
 
 void	update_textures(t_game *game, int i)
 {
 	double	step;
 	int		color;
+	double	pos;
+	double	wall;
 	int		j;
 
 	color = 0;
 	j = 0;
-	while (game->e_img)
+	step = 1.0 * game->x_axys / game->line_height;
+	pos = (game->d_start - W_HEIGHT / 2 + game->line_height / 2) * step;
+	while (game->d_end + 1)
+	{
+		game->textwallx = (int)wall & (game->x_axys - 1);
+		wall += step;
+		color = ft_choose_color(game);
+	}
 }

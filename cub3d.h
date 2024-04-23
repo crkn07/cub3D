@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/20 18:10:05 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:01:08 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ typedef struct s_game
 	int				d_end;
 	int				x_axys;
 	int				y_axys;
+	int				textwallx;
+	int				textwally;
 	int				size;
 	int				move_keys;
 	int				rotate_keys;
@@ -197,6 +199,7 @@ int		keypress(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
 void	ft_algorithm(t_game *game);
 void	ft_ray_line(t_game *game, int i);
+void	update_textures(t_game *game, int i);
 
 //*===MESSAGES===*//
 void	error_message(char *msg);
