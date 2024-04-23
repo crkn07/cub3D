@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:37:40 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/11 17:17:51 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:40:56 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_process_map(t_game *game)
 		error_message("ERROR procces");
 	game->data_map = ft_split(game->map_file, '\n');
 	i = 6;
-	line = ft_strdup(line_sp[6]);
+	line = ft_strdup(line_sp[i]);
 	while (line_sp[++i])
 	{
 		line = ft_strjoin(line, "\n");

@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 18:29:30 by crtorres          #+#    #+#              #
-#    Updated: 2024/03/13 13:53:06 by crtorres         ###   ########.fr        #
+#    Updated: 2024/03/20 16:10:30 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = ft_cub3d.c\
 		ft_move_keys.c\
 		ft_read_file.c\
 		ft_smaller_mlx.c\
+		ft_dda.c\
 
 OBJ = $(addprefix $(DOT_O)/, $(SRC:%.c=%.o))
 

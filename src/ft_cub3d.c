@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:45:04 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/14 15:51:44 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:10:40 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,16 @@ int	ft_raycasting(t_game *game)
 		game->vision = 2.0 * i / (double)W_WIDTH -1;
 		game->rays.x = game->dir.x + game->plane.x + game->vision;
 		game->rays.y = game->dir.y + game->plane.y + game->vision;
+		ft_algorithm(game);
+		game->line_height = (int)(W_HEIGHT / game->pp_to_wall);
+		game->d_start = (int)(-game->line_height / 2.0) + (int)(W_HEIGHT / 2.0);
+		if (game->d_start < 0)
+			game->d_start = 0;
+		game->d_end = (int)(game->line_height * 2.0) + (int)(W_HEIGHT * 2.0);
+		if (game->d_end >= W_HEIGHT)
+			game->d_end = W_HEIGHT - 1;
+		ft_ray_line(game, i);
+		
 	}
 }
 /* void	ft_leaks(void)

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/18 15:41:49 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:10:05 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 
 # define FALSE		0
 # define TRUE		1
+
+# define X		0
+# define Y		1
 
 # define NRTH_TEXT	2
 # define STH_TEXT	3
@@ -99,7 +102,7 @@ typedef struct s_game
 	void			*mlx;
 	void			*win;
 	void			*img;
-	void			*address;
+	int				*address;
 	char			*map_file;
 	char			*line;
 	char			coord;
@@ -115,13 +118,18 @@ typedef struct s_game
 	double			vision;
 	int				endian;
 	int				lengh_line;
+	int				line_height;
+	int				d_start;
+	int				d_end;
 	int				x_axys;
 	int				y_axys;
 	int				size;
 	int				move_keys;
 	int				rotate_keys;
 	int				side_keys;
+	int				hit_side;
 	int				turn_dir;
+	int				pp_to_wall;
 	unsigned int	c;
 	unsigned int	f;
 	t_vector		vect;
@@ -129,6 +137,7 @@ typedef struct s_game
 	t_vector		plane;
 	t_vector		rays;
 	t_vector		distance;
+	t_vector		dis_wall;
 	double			rotation;
 	t_img			*n_img;
 	t_img			*s_img;
@@ -186,6 +195,8 @@ int		close_game(t_game *game);
 t_img	*init_img(t_game *game, char *path);
 int		keypress(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
+void	ft_algorithm(t_game *game);
+void	ft_ray_line(t_game *game, int i);
 
 //*===MESSAGES===*//
 void	error_message(char *msg);
