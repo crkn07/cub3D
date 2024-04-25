@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:12:20 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/11 17:32:31 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:50:34 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	ft_check_comp(t_game *g)
 			g->coord = g->line[i];
 			g->vect.x = (i / g->cols_map) + 0.25;
 			g->vect.y = (i % g->cols_map) - (i / g->cols_map) + 0.25;
+			printf("cols es %f\n", g->vect.y);
 			if (g->coord == 'N' || g->coord == 'S')
 				ft_check_north_south(g);
 			if (g->coord == 'E' || g->coord == 'W')
@@ -111,6 +112,7 @@ void	ft_check_borders(t_game *game)
 	while (game->line[i] && game->line[i] != game->coord)
 		i++;
 	alloc_map_mem(game);
+	//printf("row es %d e i es %d\n", game->cols_map, i);
 	game->map[(i / game->cols_map)]
 	[(i % game->cols_map) - (i / game->cols_map)] = 0;
 	if (game->line[i] && game->line[i] == game->coord)

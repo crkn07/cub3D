@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/23 18:01:08 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/25 13:02:29 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@
 //	  * KEYBOARD SETTINGS *.     //
 //*------------------------------*//
 # define KEY_PRESS		2
+# define KEY_RELEASE		3
 
 /* Clicking on the RED cross on the window frame */
 # define KEY_EXIT		17
@@ -107,7 +108,7 @@ typedef struct s_game
 	char			*line;
 	char			coord;
 	char			**data_map;
-	char			**map;
+	int			**map;
 	int				rows_map;
 	int				cols_map;
 	int				mapx;
@@ -131,7 +132,7 @@ typedef struct s_game
 	int				side_keys;
 	int				hit_side;
 	int				turn_dir;
-	int				pp_to_wall;
+	double			pp_to_wall;
 	unsigned int	c;
 	unsigned int	f;
 	t_vector		vect;

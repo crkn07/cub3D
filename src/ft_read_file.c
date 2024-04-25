@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:28:09 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/13 13:49:39 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:05:03 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,8 @@ void	ft_read_file(t_game *game, char *file)
 	if (!game->map_file)
 		exit (EXIT_FAILURE);
 	game->map_file = read_and_stash(fd, game->map_file);
+	if (ft_strlen(game->map_file) < 1
+		|| ft_strspn(game->map_file, " \t\n") == ft_strlen(game->map_file))
+		error_message("empty map\n");
 	close(fd);
 }

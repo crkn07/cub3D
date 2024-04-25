@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:45:04 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/23 15:56:02 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:58:10 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,25 @@ int	close_game(t_game *game)
 void	alloc_map_mem(t_game *game)
 {
 	int	i;
-
-	game->map = (char **)ft_calloc((game->rows_map), sizeof(char *));
+	int	j = 0;
+	int	k;
+	
+	game->map = (int **)ft_calloc((game->rows_map), sizeof(int *));
 	i = -1;
 	while (++i < game->rows_map)
-		game->map[i] = ft_calloc((game->cols_map), sizeof(char));
+	{
+		game->map[i] = ft_calloc((game->cols_map), sizeof(int));
+		k = -1;
+		while (game->line[j] && game->line[j] != '\n')
+		{
+			if (game->line[j] == '0' || game->line[j] == '1')
+				game->map[i][++k] = game->line[j] - 48;
+			else
+				game->map[i][++k] = -1;
+			j++;	
+		}
+		j++;	
+	}
 }
 
 void	ft_init_game(t_game *game)
@@ -105,6 +119,7 @@ int	ft_raycast_formats(t_game *game)
 		game->plane.x = game->plane.x * cos(ROTATIONSPEED) - game->plane.y * sin(ROTATIONSPEED);
 		game->plane.y = game->plane.y * sin(ROTATIONSPEED) - game->plane.y * cos(ROTATIONSPEED);
 	}
+	return (0);
 }
 
 int	ft_raycasting(t_game *game)
@@ -112,13 +127,15 @@ int	ft_raycasting(t_game *game)
 	int	i;
 	
 	i = 0;
+	ft_raycast_formats(game);
 	while (i < W_WIDTH)
 	{
-		game->vision = 2.0 * i / (double)W_WIDTH -1;
-		game->rays.x = game->dir.x + game->plane.x + game->vision;
-		game->rays.y = game->dir.y + game->plane.y + game->vision;
+		game->vision = 2.0 * i / (double)W_WIDTH - 1;
+		game->rays.x = game->dir.x + game->plane.x * game->vision;
+		game->rays.y = game->dir.y + game->plane.y * game->vision;
 		ft_algorithm(game);
 		game->line_height = (int)(W_HEIGHT / game->pp_to_wall);
+		//printf("pp_to_wall es %d\n", game->pp_to_wall);
 		game->d_start = (int)(-game->line_height / 2.0) + (int)(W_HEIGHT / 2.0);
 		if (game->d_start < 0)
 			game->d_start = 0;
@@ -129,7 +146,10 @@ int	ft_raycasting(t_game *game)
 		update_textures(game, i);
 		i++;
 	}
+	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	return (0);
 }
+
 /* void	ft_leaks(void)
 {
 	system("leaks -q cub3d");
@@ -153,10 +173,12 @@ int	main(int argc, char **argv)
 	ft_check_comp(game);
 	ft_check_borders(game);
 	ft_init_game(game);
+	ft_raycasting(game);
 	exit(EXIT_FAILURE);
 	mlx_hook(game->win, KEY_EXIT, 0, &close_game, game);
 	mlx_hook(game->win, KEY_PRESS, 0, &keypress, game);
-	mlx_hook(game->win, KEY_PRESS, 0, &key_release, game);
+	mlx_hook(game->win, KEY_RELEASE, 0, &key_release, game);
+	mlx_loop_hook(game->mlx, &ft_raycasting, game);
 	mlx_loop(game->mlx);
 	return (0);
 }

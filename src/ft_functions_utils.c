@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:12:55 by crtorres          #+#    #+#             */
-/*   Updated: 2024/03/13 13:52:35 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:11:33 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	ft_check_access(char *path)
 {
 	if (access(path, F_OK) != 0 || access(path, R_OK) != 0)
+	{
+		printf("entraaaa\n");
 		error_message(path);
+	}
 }
 
 void	skip_spaces(char *str, int *i)
