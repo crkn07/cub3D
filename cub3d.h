@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/25 13:02:29 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:43:36 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_game
 	char			*line;
 	char			coord;
 	char			**data_map;
-	int			**map;
+	int				**map;
 	int				rows_map;
 	int				cols_map;
 	int				mapx;

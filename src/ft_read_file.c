@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:28:09 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/24 16:05:03 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:34:33 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,8 @@ void	ft_check_textures(t_game *game)
 		/* else
 			error_message("invalid data in map coord\n"); */
 	}
-	/* if (!game->n_img || !game->s_img || !game->w_img || !game->e_img)
-		error_message("invalid data\n"); */
+	if (!game->n_img || !game->s_img || !game->w_img || !game->e_img)
+		error_message("invalid data\n");
 }
 
 void	ft_read_file(t_game *game, char *file)
