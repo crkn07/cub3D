@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:37:40 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/24 15:50:57 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:42:32 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_add_space(t_game *game, int i)
 	}
 }
 
-void	ft_process_data_map(t_game *game, char **str, int start)
+void	ft_process_d_map(t_game *game, char **str, int start)
 {
 	int	i;
 
@@ -53,7 +53,8 @@ void	ft_process_data_map(t_game *game, char **str, int start)
 	while (str && str[i] && i < game->cols_map)
 	{
 		game->line = ft_strjoin(game->line, "\n");
-		if (game->map_file[start] && (ft_strcmp(&game->map_file[start], "\n") == 0))
+		if (game->map_file[start]
+			&& (ft_strcmp(&game->map_file[start], "\n") == 0))
 		{
 			ft_add_space(game, 0);
 			start++;
@@ -93,7 +94,6 @@ void	num_max_rowsandcols(t_game *game, char *line)
 	}
 }
 
-
 void	ft_process_map(t_game *game)
 {
 	char	**line_sp;
@@ -104,7 +104,7 @@ void	ft_process_map(t_game *game)
 	line_sp = ft_split(game->map_file, '\n');
 	if (!line_sp || !line_sp[5] || !line_sp[6])
 		error_message("ERROR procces");
-	game->data_map = ft_split(game->map_file, '\n');
+	game->d_map = ft_split(game->map_file, '\n');
 	i = 6;
 	line = ft_strdup(line_sp[i]);
 	while (line_sp[++i])
@@ -115,6 +115,6 @@ void	ft_process_map(t_game *game)
 	num_max_rowsandcols(game, line);
 	start = ft_check_start_map(game, line_sp);
 	free(line);
-	ft_process_data_map(game, line_sp, start);
+	ft_process_d_map(game, line_sp, start);
 	free_mtx(line_sp);
 }

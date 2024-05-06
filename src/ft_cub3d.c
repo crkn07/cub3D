@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:45:04 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/26 15:49:13 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:53:55 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,6 @@ int	close_game(t_game *game)
 	mlx_destroy_window(game->mlx, game->win);
 	//free_mtx(&game->line);
 	exit(EXIT_SUCCESS);
-}
-
-void	alloc_map_mem(t_game *game)
-{
-	int	i;
-	int	j = 0;
-	int	k;
-	
-	game->map = (int **)ft_calloc((game->rows_map), sizeof(int *));
-	i = -1;
-	while (++i < game->rows_map)
-	{
-		game->map[i] = ft_calloc((game->cols_map), sizeof(int));
-		k = -1;
-		while (game->line[j] && game->line[j] != '\n')
-		{
-			if (game->line[j] == '0' || game->line[j] == '1')
-				game->map[i][++k] = game->line[j] - 48;
-			else
-				game->map[i][++k] = -1;
-			j++;	
-		}
-		j++;	
-	}
 }
 
 void	ft_init_game(t_game *game)
@@ -59,96 +35,6 @@ void	ft_init_game(t_game *game)
 	game->rotate_keys = -1;
 	game->turn_dir = -1;
 	game->side_keys = -1;
-}
-
-int	ft_raycast_formats(t_game *game)
-{
-	int 	i;
-	double	aux;
-	double	plane_aux;
-	
-	i = 0;
-	if(game->move_keys == KEY_W)
-	{
-		if (game->data_map[(int)(game->vect.x + game->dir.x * SPEED)][(int)game->vect.y] == 0)
-			game->vect.x += game->dir.x * SPEED;
-		if (game->data_map[(int)game->vect.x][(int)(game->vect.y + game->dir.y * SPEED)] == 0)
-			game->vect.y += game->dir.y * SPEED;
-	}
-	if (game->move_keys == KEY_S)
-	{
-		if (game->data_map[(int)(game->vect.x - game->dir.x *SPEED)][(int)game->vect.y] == 0)
-			game->vect.x -= game->dir.x * SPEED;
-		if (game->data_map[(int)game->vect.x][(int)(game->vect.y + game->dir.y *SPEED)] == 0)
-			game->vect.y -= game->dir.y * SPEED;
-	}
-	if (game->side_keys == KEY_A)
-	{
-		if (game->data_map[(int)(game->vect.x - game->plane.x *SPEED)][(int)game->vect.y] == 0)
-			game->vect.x -= game->dir.x * SPEED;
-		if (game->data_map[(int)game->vect.x][(int)(game->vect.y - game->plane.y * SPEED)] == 0)
-			game->vect.y -= game->dir.y * SPEED;
-	}
-	if (game->side_keys == KEY_D)
-	{
-		if (game->data_map[(int)(game->vect.x - game->plane.x * SPEED)][(int)game->vect.y] == 0)
-			game->vect.x += game->dir.x * SPEED;
-		if (game->data_map[(int)game->vect.x][(int)(game->vect.y + game->plane.y * SPEED)] == 0)
-			game->vect.y += game->dir.y * SPEED;
-	}
-	if (game->rotate_keys == KEY_RIGHT)
-	{
-		game->rotate_keys = -1;
-		game->turn_dir = -1;
-		game->rotation = game->rotation + game->turn_dir * (ROTATIONSPEED * 180 / PI);
-		aux = game->dir.x;
-		game->dir.x = game->dir.x * cos(-ROTATIONSPEED) - game->dir.y * sin(-ROTATIONSPEED);
-		game->dir.y = aux * sin(-ROTATIONSPEED) - game->dir.y * cos(-ROTATIONSPEED);
-		plane_aux = game->plane.x;
-		game->plane.x = game->plane.x * cos(-ROTATIONSPEED) - game->plane.y * sin(-ROTATIONSPEED);
-		game->plane.y = game->plane.y * sin(-ROTATIONSPEED) - game->plane.y * cos(-ROTATIONSPEED);
-	}
-	if (game->rotate_keys == KEY_LEFT)
-	{
-		game->rotate_keys = -1;
-		game->turn_dir = 1;
-		game->rotation = game->rotation + game->turn_dir * (ROTATIONSPEED * 180 / PI);
-		aux = game->dir.x;
-		game->dir.x = game->dir.x * cos(ROTATIONSPEED) - game->dir.y * sin(ROTATIONSPEED);
-		game->dir.y = aux * sin(ROTATIONSPEED) - game->dir.y * cos(ROTATIONSPEED);
-		plane_aux = game->plane.x;
-		game->plane.x = game->plane.x * cos(ROTATIONSPEED) - game->plane.y * sin(ROTATIONSPEED);
-		game->plane.y = game->plane.y * sin(ROTATIONSPEED) - game->plane.y * cos(ROTATIONSPEED);
-	}
-	return (0);
-}
-
-int	ft_raycasting(t_game *game)
-{
-	int	i;
-	
-	i = 0;
-	ft_raycast_formats(game);
-	while (i < W_WIDTH)
-	{
-		game->vision = 2.0 * i / (double)W_WIDTH - 1;
-		game->rays.x = game->dir.x + game->plane.x * game->vision;
-		game->rays.y = game->dir.y + game->plane.y * game->vision;
-		ft_algorithm(game);
-		game->line_height = (int)(W_HEIGHT / game->pp_to_wall);
-		printf("line_height es %d\n", game->line_height);
-		game->d_start = (int)(-game->line_height / 2.0) + (int)(W_HEIGHT / 2.0);
-		if (game->d_start < 0)
-			game->d_start = 0;
-		game->d_end = (int)(game->line_height * 2.0) + (int)(W_HEIGHT * 2.0);
-		if (game->d_end >= W_HEIGHT)
-			game->d_end = W_HEIGHT - 1;
-		ft_ray_line(game, i);
-		update_textures(game, i);
-		i++;
-	}
-	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-	return (0);
 }
 
 /* void	ft_leaks(void)

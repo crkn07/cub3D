@@ -6,32 +6,11 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:12:20 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/26 14:57:44 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:51:53 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-int	check_extension(char *str, char *ext)
-{
-	int	i;
-	int	j;
-
-	i = ft_strlen(str) - ft_strlen(ext);
-	if (i <= 0 || str[i] != '.')
-		error_message("invalid extension\n");
-	j = 0;
-	while (str[i + j] != '\0' && ext[j] != '\0')
-	{
-		if (str[i + j] == ext[j])
-			j++;
-		else
-			break ;
-	}
-	if (!(str[i + j] == '\0' && ext[j] == '\0'))
-		error_message("invalid extension\n");
-	return (TRUE);
-}
 
 void	ft_check_north_south(t_game *game)
 {
@@ -73,6 +52,13 @@ void	ft_check_east_weast(t_game *game)
 	}
 }
 
+void	update_coord(t_game *game, int i)
+{
+	game->coord = game->line[i];
+	game->vect.x = (i / game->cols_map) + 0.25;
+	game->vect.y = (i % game->cols_map) - (i / game->cols_map) + 0.25;
+}
+
 void	ft_check_comp(t_game *g)
 {
 	int	i;
@@ -85,9 +71,7 @@ void	ft_check_comp(t_game *g)
 		if (g->line[i] == 'N' || g->line[i] == 'S' || g->line[i] == 'E'
 			|| g->line[i] == 'W')
 		{
-			g->coord = g->line[i];
-			g->vect.x = (i / g->cols_map) + 0.25;
-			g->vect.y = (i % g->cols_map) - (i / g->cols_map) + 0.25;
+			update_coord(g, i);
 			if (g->coord == 'N' || g->coord == 'S')
 				ft_check_north_south(g);
 			if (g->coord == 'E' || g->coord == 'W')

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:57:53 by crtorres          #+#    #+#             */
-/*   Updated: 2024/02/27 16:51:09 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:34:51 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	exit_message(char *msg, t_game *game)
 	ft_putstr_fd(ORANGE "-*-*-*-*-*-*-\n" RESET, 2);
 	ft_putstr_fd(BG_ORANGE, 2);
 	ft_putstr_fd(msg, 2);
-	ft_putstr_fd(RESET, 2);
-	ft_putstr_fd("\n", 2);
+	ft_putendl_fd(RESET, 2);
 	ft_putstr_fd(ORANGE "-*-*-*-*-*-*-\n" RESET, 2);
 	close_game(game);
 }

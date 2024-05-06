@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/26 15:43:36 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:01:29 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define EAST		8
 # define WEST		9
 
-# define SPEED		0.10
+# define SPEED		0.08
 # define ROTATIONSPEED		0.05
 # define PI		3.141592
 
@@ -107,7 +107,7 @@ typedef struct s_game
 	char			*map_file;
 	char			*line;
 	char			coord;
-	char			**data_map;
+	char			**d_map;
 	int				**map;
 	int				rows_map;
 	int				cols_map;
@@ -181,30 +181,35 @@ typedef struct s_game
 # define RESET   "\x1b[0m"
 
 //*===MAP===*//
-void	skip_spaces(char *str, int *i);
-void	ft_check_access(char *path);
-int		check_extension(char *str, char *ext);
-void	ft_check_comp(t_game *game);
-void	ft_check_borders(t_game *game);
-void 	ft_check_textures(t_game *game);
-char	*read_and_stash(int fd, char *stash);
-void	alloc_map_mem(t_game *game);
-void	ft_read_file(t_game *game, char *file);
-void	ft_process_map(t_game *game);
-void	fill(t_game *game, int size, int current, int col);
+void			skip_spaces(char *str, int *i);
+void			ft_check_access(char *path);
+int				check_extension(char *str, char *ext);
+void			ft_check_comp(t_game *game);
+void			ft_check_borders(t_game *game);
+void 			ft_check_textures(t_game *game);
+char			*read_and_stash(int fd, char *stash);
+void			alloc_map_mem(t_game *game);
+void			ft_read_file(t_game *game, char *file);
+void			ft_process_map(t_game *game);
+void			fill(t_game *game, int size, int current, int col);
+unsigned int	*ft_ctoascii(char **num);
+void 			ft_load_texture(t_game *g, int i, int j, char *dir);
+void 			ft_load_color(t_game *game, int i, int *j, char color);
 
 //*===GAME===*//
-int		close_game(t_game *game);
-t_img	*init_img(t_game *game, char *path);
-int		keypress(int keycode, t_game *game);
-int		key_release(int keycode, t_game *game);
-void	ft_algorithm(t_game *game);
-void	ft_ray_line(t_game *game, int i);
-void	update_textures(t_game *game, int i);
+int				close_game(t_game *game);
+t_img			*init_img(t_game *game, char *path);
+int				keypress(int keycode, t_game *game);
+int				key_release(int keycode, t_game *game);
+void			ft_algorithm(t_game *game);
+void			ft_ray_line(t_game *game, int i);
+void			update_textures(t_game *game, int i);
+int				ft_raycasting(t_game *game);
+void			ft_data_text(t_game *game);
 
 //*===MESSAGES===*//
-void	error_message(char *msg);
-void	exit_message(char *msg, t_game *game);
+void			error_message(char *msg);
+void			exit_message(char *msg, t_game *game);
 
 
 #endif

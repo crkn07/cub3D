@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:28:09 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/26 15:34:33 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:59:15 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,6 @@ char	*read_and_stash(int fd, char *stash)
 	return (stash);
 }
 
-unsigned int	*ft_ctoascii(char **num)
-{
-	unsigned int	*n;
-	int				i;
-
-	i = -1;
-	n = calloc(sizeof(int), 4);
-	if (!n)
-	{
-		free_mtx(num);
-		error_message("problem whith numbers");
-	}
-	while (num[++i])
-	{
-		n[i] = ft_atoi(num[i]);
-		if (n[i] < 0 || n[i] > 255)
-		{
-			free(n);
-			free_mtx(num);
-			error_message("problem whith numbers");
-		}
-	}
-	free_mtx(num);
-	return (n);
-}
-
 unsigned int	ft_print_color(unsigned int *num)
 {
 	unsigned int	c_code;
@@ -78,77 +52,57 @@ unsigned int	ft_print_color(unsigned int *num)
 	return (c_code);
 }
 
-void	ft_check_textures(t_game *game)
+void ft_load_texture(t_game *g, int i, int j, char *dir)
 {
-	int	i;
-	int	j;
-	unsigned int	*k;
-	char *path;
-	char **aux;
+    char *path;
+    char **aux;
 
-	i = -1;
-	while (game->data_map && game->data_map[++i])
-	{
-		j = 0;
-		if (ft_strcmp(&game->data_map[i][j], " "))
-			skip_spaces(game->data_map[i], &j);
-		if (game->data_map[i][j] && (game->data_map[i][j] == 'N' && game->data_map[i][j + 1] == 'O' && game->data_map[i][j + 2] == ' '))
-		{
-			path = ft_strstr(game->data_map[i], "./textures/");
-			ft_check_access(path);
-			game->n_img = init_img(game, path);
-		}
-		else if (game->data_map[i][j] && (game->data_map[i][j] == 'S' && game->data_map[i][j + 1] == 'O' && game->data_map[i][j + 2] == ' '))
-		{
-			path = ft_strstr(game->data_map[i], "./textures/");
-			ft_check_access(path);
-			game->s_img = init_img(game, path);
-		}
-		else if (game->data_map[i][j] && (game->data_map[i][j] == 'W' && game->data_map[i][j + 1] == 'E' && game->data_map[i][j + 2] == ' '))
-		{
-			path = ft_strstr(game->data_map[i], "./textures/");
-			aux = ft_split(path, ' ');
-			ft_check_access(*aux);
-			game->e_img = init_img(game, *aux);
-			free_mtx(aux);
-		}
-		else if (game->data_map[i][j] && (game->data_map[i][j] == 'E' && game->data_map[i][j + 1] == 'A' && game->data_map[i][j + 2] == ' '))
-		{
-			path = ft_strstr(game->data_map[i], "./textures/");
-			ft_check_access(path);
-			game->w_img = init_img(game, path);
-		}
-		else if (game->data_map[i][j] && (game->data_map[i][j] == 'F' && game->data_map[i][j + 1] == ' '))
-		{
-			j++;
-			if (ft_strcmp(&game->data_map[i][j], " ") != 0)
-				skip_spaces(game->data_map[i], &j);
-			path = ft_strdup(&game->data_map[i][j]);
-			aux = ft_split(path, ',');
-			k = ft_ctoascii(aux);
-			//free (*aux);
-			free(path);
-			game->f = ft_print_color(k);
-			free (k);
-		}
-		else if (game->data_map[i][j] && (game->data_map[i][j] == 'C' && game->data_map[i][j + 1] == ' '))
-		{
-			j++;
-			if (ft_strcmp(&game->data_map[i][j], " ") != 0)
-				skip_spaces(game->data_map[i], &j);
-			path = ft_strdup(&game->data_map[i][j]);
-			aux = ft_split(path, ',');
-			k = ft_ctoascii(aux);
-			//free (*aux);
-			free(path);
-			game->c = ft_print_color(k);
-			free (k);
-		}
-		/* else
-			error_message("invalid data in map coord\n"); */
-	}
-	if (!game->n_img || !game->s_img || !game->w_img || !game->e_img)
-		error_message("invalid data\n");
+    if (g->d_map[i][j]
+		&& strncmp(g->d_map[i] + j, dir, 2) == 0 && g->d_map[i][j + 2] == ' ')
+    {
+        path = ft_strstr(g->d_map[i], "./textures/");
+        if (strcmp(dir, "WE") == 0)
+        {
+            aux = ft_split(path, ' ');
+            ft_check_access(*aux);
+            g->w_img = init_img(g, *aux);
+            free_mtx(aux);
+        }
+        else
+        {
+            ft_check_access(path);
+            if (strcmp(dir, "NO") == 0)
+                g->n_img = init_img(g, path);
+            else if (strcmp(dir, "SO") == 0)
+                g->s_img = init_img(g, path);
+            else if (strcmp(dir, "EA") == 0)
+                g->e_img = init_img(g, path);
+        }
+    }
+}
+
+void ft_load_color(t_game *game, int i, int *j, char color)
+{
+    char *path;
+    char **aux;
+    unsigned int *k;
+
+    if (game->d_map[i][*j] && (game->d_map[i][*j] == color
+		&& game->d_map[i][*j + 1] == ' '))
+    {
+        (*j)++;
+        if (ft_strcmp(&game->d_map[i][*j], " ") != 0)
+            skip_spaces(game->d_map[i], j);
+        path = ft_strdup(&game->d_map[i][*j]);
+        aux = ft_split(path, ',');
+        k = ft_ctoascii(aux);
+        free(path);
+        if (color == 'F')
+            game->f = ft_print_color(k);
+        else if (color == 'C')
+            game->c = ft_print_color(k);
+        free (k);
+    }
 }
 
 void	ft_read_file(t_game *game, char *file)

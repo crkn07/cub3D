@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:49:24 by crtorres          #+#    #+#             */
-/*   Updated: 2024/04/26 14:58:41 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:32:20 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ t_img	*init_img(t_game *game, char *path)
 	}
 	img->ptr = mlx_xpm_file_to_image(game->mlx, path, &game->x_axys, &game->y_axys);
 	if (img->ptr == NULL)
-	{
-		//free (path);
 		error_message("XPM to image fail! please check it.\n");
-	}
 	img->data = (int *)mlx_get_data_addr(img->ptr, &img->bits, &img->len, &img->endian);
 	if(!img->data)
 	{
