@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 14:40:33 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:31:58 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define EAST		8
 # define WEST		9
 
-# define SPEED		0.06
+# define SPEED		0.08
 # define ROTATIONSPEED		0.02
 
 

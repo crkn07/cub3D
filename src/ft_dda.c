@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:54:35 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 13:57:09 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:30:31 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,9 @@ void	ft_algorithm(t_game *game)
 {
 	game->mapx = (int)game->vect.x;
 	game->mapy = (int)game->vect.y;
-	game->distance.x = 1e30;
-	if (game->distance.x != 0)
-		game->distance.x = fabs(1.0 / game->rays.x);
-	game->distance.y = 1e30;
-	if (game->distance.y != 0)
-		game->distance.y = fabs(1.0 / game->rays.y);
-	game->stepx = 1;
-	if (game->rays.x < 0)
-	{
-		game->stepx = game->stepx * -1;
-		game->dis_wall.x = (game->vect.x - game->mapx) * game->distance.x;
-	}
-	else
-		game->dis_wall.x = (game->mapx + 1.0 - game->vect.x) * game->distance.x;
-	game->stepy = 1;
-	if (game->rays.y < 0)
-	{
-		game->stepy = game->stepy * -1;
-		game->dis_wall.y = (game->vect.y - game->mapy) * game->distance.y;
-	}
-	else
-		game->dis_wall.y = (game->mapy + 1.0 - game->vect.y) * game->distance.y;
+	 game->distance.x = player_distance(game->rays.x);
+    game->distance.y = player_distance(game->rays.y);
+	ft_wall_dist(game);
 	ft_check_rays(game);
 }
 
