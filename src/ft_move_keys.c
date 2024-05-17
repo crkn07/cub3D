@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:19:19 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/03 18:29:41 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:35:51 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	keypress(int keycode, t_game *game)
 		game->move_keys = keycode;
 	else if (keycode == KEY_A || keycode == KEY_D)
 		game->side_keys = keycode;
-	else if (keycode == KEY_S || keycode == KEY_DOWN)
+	else if (keycode == KEY_S)
 		game->move_keys = keycode;
 	else if (keycode == KEY_RIGHT || keycode == KEY_LEFT)
 		game->rotate_keys = keycode;

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 14:40:33 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:19:53 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "src/libft/libft.h"
-# include "mlx/mlx.h"
+# include "minilibx-linux/mlx.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -54,8 +54,8 @@
 # define EAST		8
 # define WEST		9
 
-# define SPEED		0.06
-# define ROTATIONSPEED		0.02
+# define SPEED		0.1
+# define ROTATIONSPEED		0.05
 
 
 //*------------------------------//
@@ -67,18 +67,16 @@
 /* Clicking on the RED cross on the window frame */
 # define KEY_EXIT		17
 
-# define KEY_ESC			53
-# define KEY_RESET			15
-# define KEY_RETURN			36
+# define KEY_ESC			65307
 
-# define KEY_W				13
-# define KEY_A				0
-# define KEY_S				1
-# define KEY_D				2
+# define KEY_W				119
+# define KEY_A				97
+# define KEY_S				115
+# define KEY_D				100
 # define KEY_UP				126
-# define KEY_LEFT			123
-# define KEY_DOWN			125
-# define KEY_RIGHT			124
+# define KEY_LEFT			65361
+# define KEY_RIGHT			65363
+
 
 typedef struct s_vector
 {
@@ -141,10 +139,11 @@ typedef struct s_game
 	t_vector		distance;
 	t_vector		dis_wall;
 	double			rotation;
-	t_img			*n_img;
-	t_img			*s_img;
-	t_img			*e_img;
-	t_img			*w_img;
+	t_img			img_data;
+	t_img			n_img;
+	t_img			s_img;
+	t_img			e_img;
+	t_img			w_img;
 }	t_game;
 
 //*===SETTINGS COLORS===*//
@@ -197,7 +196,7 @@ void 			ft_load_color(t_game *game, int i, int *j, char color);
 
 //*===GAME===*//
 int				close_game(t_game *game);
-t_img			*init_img(t_game *game, char *path);
+t_img			init_img(t_game *game, char *path);
 int				keypress(int keycode, t_game *game);
 int				key_release(int keycode, t_game *game);
 void			ft_algorithm(t_game *game);

@@ -6,21 +6,21 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:12:45 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 14:29:05 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:24:24 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-double player_distance(double ray)
+double	player_distance(double ray)
 {
 	if (ray != 0)
-		return fabs(1.0 / ray);
+		return (fabs(1.0 / ray));
 	else
-		return 1e30;
+		return (1e30);
 }
 
-void ft_wall_dist(t_game *game)
+void	ft_wall_dist(t_game *game)
 {
 	game->stepx = 1;
 	if (game->rays.x < 0)

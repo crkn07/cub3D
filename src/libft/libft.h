@@ -21,6 +21,7 @@
 # endif
 
 # include <unistd.h>
+# include <stdint.h>
 # include <stdlib.h>
 # include <limits.h>
 # include <fcntl.h>

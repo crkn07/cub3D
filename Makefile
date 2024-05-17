@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 18:29:30 by crtorres          #+#    #+#              #
-#    Updated: 2024/05/06 14:19:58 by crtorres         ###   ########.fr        #
+#    Updated: 2024/05/17 15:56:08 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@ SRC_PATH = ./src
 DOT_O = _Objfiles
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
-MINILIBX = -framework OpenGL -framework AppKit
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+MINILIBX = -lXext -lX11 -lm -D LINUX
 LIBFT = ./src/libft/libft.a
-MLX = ./mlx/libmlx.a
+MLX = ./minilibx-linux/libmlx_Linux.a
 
 LIB = cub3d.h
 
@@ -51,10 +51,10 @@ make_libft:
 	@make all -sC ./src/libft
 
 make_mlx:
-	@make -C ./mlx
+	@make -C ./minilibx-linux
 	
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -I $(LIB) $(LIBFT) $(MLX) $(MINILIBX) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -I $(LIB) $(LIBFT) $(MLX) $(MINILIBX) -o $(NAME) 
 	$(GREEN)
 	@clear
 	@echo "CUB3D READY!"
@@ -63,15 +63,15 @@ $(NAME): $(OBJ)
 clean:
 	$(CYAN) "\n cleaning everything...\n" $(RESET)
 	@rm -f $(OBJ)
-	@make fclean -sC ./src/libft
-	@make clean -C ./mlx
+	@make clean -sC ./src/libft
+	@make clean -C ./minilibx-linux
 	@rm -rf $(DOT_O)
 
 fclean: clean
 	@clear
 	@rm -f $(NAME)
 	@make fclean -sC ./src/libft
-	@make clean -C ./mlx
+	@make clean -C ./minilibx-linux
 	@rm -rf $(DOT_O)
 
 re: fclean all

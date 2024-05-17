@@ -6,16 +6,46 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:45:04 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 13:53:55 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:12:29 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
+void	free_game(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	if (game->win)
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		game->win = NULL;
+	}
+	if (game->map)
+	{
+		while (++i < game->rows_map)
+			free(game->map[i]);
+		free(game->map);
+		game->map = NULL;
+	}
+	if (game->d_map)
+		free_mtx(game->d_map);
+	if (game->map_file)
+		free(game->map_file);
+	if (game->line)
+		free(game->line);
+	free(game);
+}
+
 int	close_game(t_game *game)
 {
-	mlx_destroy_window(game->mlx, game->win);
-	//free_mtx(&game->line);
+	if (game->img)
+	{
+		mlx_destroy_image(game->mlx, game->img);
+		game->img = NULL;
+	}
+	free_game(game);
 	exit(EXIT_SUCCESS);
 }
 
@@ -46,7 +76,6 @@ int	main(int argc, char **argv)
 {
 	t_game	*game;
 
-	//atexit(ft_leaks);
 	if (argc != 2)
 		return (perror("invalid number of arguments"), 1);
 	game = ft_calloc(1, sizeof(t_game));
@@ -61,9 +90,9 @@ int	main(int argc, char **argv)
 	ft_check_borders(game);
 	ft_init_game(game);
 	ft_raycasting(game);
-	mlx_hook(game->win, KEY_EXIT, 0, &close_game, game);
-	mlx_hook(game->win, KEY_PRESS, 0, &keypress, game);
-	mlx_hook(game->win, KEY_RELEASE, 0, &key_release, game);
+	mlx_hook(game->win, KEY_EXIT, (1L << 0), &close_game, game);
+	mlx_hook(game->win, KEY_PRESS, (1L << 0), &keypress, game);
+	mlx_hook(game->win, KEY_RELEASE, (1L << 1), &key_release, game);
 	mlx_loop_hook(game->mlx, &ft_raycasting, game);
 	mlx_loop(game->mlx);
 	return (0);

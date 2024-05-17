@@ -6,30 +6,21 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:49:24 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 12:32:20 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:59:10 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-t_img	*init_img(t_game *game, char *path)
+t_img	init_img(t_game *game, char *path)
 {
-	t_img	*img;
-	
-	img = ft_calloc(1, sizeof(t_img));
-	if (!img)
-	{
-		free(path);
-		error_message("XPM memory allocation fail\n");
-	}
-	img->ptr = mlx_xpm_file_to_image(game->mlx, path, &game->x_axys, &game->y_axys);
-	if (img->ptr == NULL)
+	game->img_data.ptr = mlx_xpm_file_to_image(game->mlx, path,
+			&game->x_axys, &game->y_axys);
+	if (game->img_data.ptr == NULL)
 		error_message("XPM to image fail! please check it.\n");
-	img->data = (int *)mlx_get_data_addr(img->ptr, &img->bits, &img->len, &img->endian);
-	if(!img->data)
-	{
-		free(path);
+	game->img_data.data = (int *)mlx_get_data_addr(game->img_data.ptr,
+			&game->img_data.bits, &game->img_data.len, &game->img_data.endian);
+	if (!game->img_data.data)
 		error_message("XPM data fail! please check it.\n");
-	}
-	return (img);
+	return (game->img_data);
 }

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:50:20 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 13:59:26 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:04:08 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 void	alloc_map_mem(t_game *game)
 {
 	int	i;
-	int	j = 0;
+	int	j;
 	int	k;
-	
+
 	game->map = (int **)ft_calloc((game->rows_map), sizeof(int *));
 	i = -1;
+	j = 0;
 	while (++i < game->rows_map)
 	{
 		game->map[i] = ft_calloc((game->cols_map), sizeof(int));
@@ -30,9 +31,9 @@ void	alloc_map_mem(t_game *game)
 				game->map[i][++k] = game->line[j] - 48;
 			else
 				game->map[i][++k] = -1;
-			j++;	
+			j++;
 		}
-		j++;	
+		j++;
 	}
 }
 
@@ -74,10 +75,9 @@ void	ft_check_textures(t_game *game)
 		ft_load_texture(game, i, j, "EA");
 		ft_load_color(game, i, &j, 'F');
 		ft_load_color(game, i, &j, 'C');
-		/* else
-			error_message("invalid data in map coord\n"); */
 	}
-	if (!game->n_img || !game->s_img || !game->w_img || !game->e_img)
+	if (!game->n_img.data || !game->s_img.data || !game->w_img.data
+		|| !game->e_img.data)
 		error_message("invalid data\n");
 }
 
@@ -96,7 +96,7 @@ unsigned int	*ft_ctoascii(char **num)
 	while (num[++i])
 	{
 		n[i] = ft_atoi(num[i]);
-		if (n[i] < 0 || n[i] > 255)
+		if (n[i] > 255)
 		{
 			free(n);
 			free_mtx(num);

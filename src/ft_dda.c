@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:54:35 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 14:30:31 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:05:56 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ void	ft_algorithm(t_game *game)
 {
 	game->mapx = (int)game->vect.x;
 	game->mapy = (int)game->vect.y;
-	 game->distance.x = player_distance(game->rays.x);
-    game->distance.y = player_distance(game->rays.y);
+	game->distance.x = player_distance(game->rays.x);
+	game->distance.y = player_distance(game->rays.y);
 	ft_wall_dist(game);
 	ft_check_rays(game);
 }
 
 void	ft_ray_line(t_game *game, int i)
 {
-	int j;
+	int	j;
 
 	j = -1;
 	while (++j < game->d_start)
@@ -64,20 +64,21 @@ void	ft_ray_line(t_game *game, int i)
 int	ft_choose_color(t_game *game)
 {
 	int	color;
+	int	index;
 
 	color = 0;
+	if (game->textwallx < 0 || game->textwallx >= game->x_axys
+		|| game->textwally < 0 || game->textwally >= game->y_axys)
+		return (color);
+	index = game->textwally * game->x_axys + game->textwallx;
 	if (game->hit_side == 0 && game->rays.x > 0)
-		color = *(game->n_img->data + (game->x_axys * game->textwallx
-			+ game->textwally));
+		color = *(game->n_img.data + index);
 	if (game->hit_side == 0 && game->rays.x < 0)
-		color = *(game->s_img->data + (game->x_axys * game->textwallx
-			+ game->textwally));
+		color = *(game->s_img.data + index);
 	if (game->hit_side == 1 && game->rays.y > 0)
-		color = *(game->w_img->data + (game->x_axys * game->textwallx
-			+ game->textwally));
+		color = *(game->w_img.data + index);
 	if (game->hit_side == 1 && game->rays.y < 0)
-		color = *(game->e_img->data + (game->x_axys * game->textwallx
-			+ game->textwally));
+		color = *(game->e_img.data + index);
 	return (color);
 }
 

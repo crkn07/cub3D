@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:52:28 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 13:55:18 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:23:39 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	ft_data_text(t_game *game)
 	if (game->hit_side == 0 && game->rays.x > 0)
 		game->textwally = game->y_axys - game->textwally - 1;
 	if (game->hit_side == 1 && game->rays.x < 0)
-		game->textwally = game->y_axys - game->textwally - 1;		
+		game->textwally = game->y_axys - game->textwally - 1;
 }
 
-void ft_rotate(t_game *game, int turn_dir, double rotation_speed)
+void	ft_rotate(t_game *game, int turn_dir, double rotation_speed)
 {
-	double aux;
-	double plane_aux;
+	double	aux;
+	double	plane_aux;
 
 	game->turn_dir = turn_dir;
 	game->rotation = game->rotation + game->turn_dir
@@ -50,9 +50,9 @@ void ft_rotate(t_game *game, int turn_dir, double rotation_speed)
 
 void	ft_movement(t_game *game, int key, double speed)
 {
-	double dx;
-	double dy;
-	
+	double	dx;
+	double	dy;
+
 	dx = 0;
 	dy = 0;
 	if (key == KEY_W || key == KEY_S)
@@ -91,7 +91,7 @@ int	ft_raycast_movements(t_game *game)
 int	ft_raycasting(t_game *game)
 {
 	int	i;
-	
+
 	i = 0;
 	ft_raycast_movements(game);
 	while (i < W_WIDTH)

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:37:40 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/06 13:42:32 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:12:41 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	ft_process_d_map(t_game *game, char **str, int start)
 
 	game->line = ft_strdup(str[6]);
 	ft_add_space(game, ft_strlen(str[6]));
-	i = 7;
-	while (str && str[i] && i < game->cols_map)
+	i = 6;
+	while (str && str[++i] && i < game->cols_map)
 	{
 		game->line = ft_strjoin(game->line, "\n");
 		if (game->map_file[start]
@@ -65,7 +65,6 @@ void	ft_process_d_map(t_game *game, char **str, int start)
 			ft_add_space(game, ft_strlen(str[i]));
 			start = start + 1 + ft_strlen(str[i]);
 		}
-		i++;
 	}
 	game->size = ft_strlen(game->line);
 }
@@ -105,6 +104,8 @@ void	ft_process_map(t_game *game)
 	if (!line_sp || !line_sp[5] || !line_sp[6])
 		error_message("ERROR procces");
 	game->d_map = ft_split(game->map_file, '\n');
+	if (!game->d_map)
+		error_message("ERROR procces");
 	i = 6;
 	line = ft_strdup(line_sp[i]);
 	while (line_sp[++i])

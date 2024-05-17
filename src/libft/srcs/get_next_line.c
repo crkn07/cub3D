@@ -127,7 +127,7 @@ char	*ft_read_and_stash(int fd, char *stash)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*stash[OPEN_MAX];
+	static char	*stash[FOPEN_MAX];
 
 	if (fd < 0)
 		return (NULL);
