@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 14:54:35 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/17 16:05:56 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:56:16 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	ft_check_rays(t_game *game)
 	{
 		if (game->dis_wall.x < game->dis_wall.y)
 		{
-			game->dis_wall.x += game->distance.x;
-			game->mapx += game->stepx;
-			game->hit_side = X;
+			update_x_direction(game);
 		}
 		else
 		{
@@ -31,6 +29,8 @@ void	ft_check_rays(t_game *game)
 			game->mapy += game->stepy;
 			game->hit_side = Y;
 		}
+		if (game->mapx < 0 || game->mapy < 0)
+			break ;
 		if (game->map[game->mapx][game->mapy] == 1)
 			flag = 1;
 	}

@@ -6,7 +6,7 @@
 #    By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 18:29:30 by crtorres          #+#    #+#              #
-#    Updated: 2024/05/17 15:56:08 by crtorres         ###   ########.fr        #
+#    Updated: 2024/10/30 10:34:28 by crtorres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC_PATH = ./src
 DOT_O = _Objfiles
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 MINILIBX = -lXext -lX11 -lm -D LINUX
 LIBFT = ./src/libft/libft.a
 MLX = ./minilibx-linux/libmlx_Linux.a
@@ -73,6 +73,7 @@ fclean: clean
 	@make fclean -sC ./src/libft
 	@make clean -C ./minilibx-linux
 	@rm -rf $(DOT_O)
+	@clear
 
 re: fclean all
 

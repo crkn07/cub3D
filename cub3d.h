@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:43:21 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/17 16:19:53 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:56:35 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ void			ft_check_borders(t_game *game);
 void 			ft_check_textures(t_game *game);
 char			*read_and_stash(int fd, char *stash);
 void			alloc_map_mem(t_game *game);
+void			update_x_direction(t_game *game);
 void			ft_read_file(t_game *game, char *file);
 void			ft_process_map(t_game *game);
 void			fill(t_game *game, int size, int current, int col);

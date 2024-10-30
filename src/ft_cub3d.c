@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:45:04 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/17 16:12:29 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/08/23 12:25:20 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	free_game(t_game *game)
 		free(game->map_file);
 	if (game->line)
 		free(game->line);
-	free(game);
 }
 
 int	close_game(t_game *game)
@@ -67,33 +66,26 @@ void	ft_init_game(t_game *game)
 	game->side_keys = -1;
 }
 
-/* void	ft_leaks(void)
-{
-	system("leaks -q cub3d");
-} */
-
 int	main(int argc, char **argv)
 {
-	t_game	*game;
+	t_game	game;
 
 	if (argc != 2)
 		return (perror("invalid number of arguments"), 1);
-	game = ft_calloc(1, sizeof(t_game));
-	if (!game)
-		return (perror("Memory allocation memory"), 1);
+	bzero(&game, sizeof(t_game));
 	check_extension(argv[1], MAP_EXT);
-	game->mlx = mlx_init();
-	ft_read_file(game, argv[1]);
-	ft_process_map(game);
-	ft_check_textures(game);
-	ft_check_comp(game);
-	ft_check_borders(game);
-	ft_init_game(game);
-	ft_raycasting(game);
-	mlx_hook(game->win, KEY_EXIT, (1L << 0), &close_game, game);
-	mlx_hook(game->win, KEY_PRESS, (1L << 0), &keypress, game);
-	mlx_hook(game->win, KEY_RELEASE, (1L << 1), &key_release, game);
-	mlx_loop_hook(game->mlx, &ft_raycasting, game);
-	mlx_loop(game->mlx);
+	game.mlx = mlx_init();
+	ft_read_file(&game, argv[1]);
+	ft_process_map(&game);
+	ft_check_textures(&game);
+	ft_check_comp(&game);
+	ft_check_borders(&game);
+	ft_init_game(&game);
+	ft_raycasting(&game);
+	mlx_hook(game.win, KEY_EXIT, (1L << 0), &close_game, &game);
+	mlx_hook(game.win, KEY_PRESS, (1L << 0), &keypress, &game);
+	mlx_hook(game.win, KEY_RELEASE, (1L << 1), &key_release, &game);
+	mlx_loop_hook(game.mlx, &ft_raycasting, &game);
+	mlx_loop(game.mlx);
 	return (0);
 }

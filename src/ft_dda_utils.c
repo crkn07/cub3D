@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:52:28 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/08 15:23:39 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:12:13 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	ft_raycasting(t_game *game)
 
 	i = 0;
 	ft_raycast_movements(game);
+	game->mapx = 0;
+	game->mapy = 0;
 	while (i < W_WIDTH)
 	{
 		game->vision = 2.0 * i / (double)W_WIDTH - 1;

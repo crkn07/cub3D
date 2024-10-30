@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:12:45 by crtorres          #+#    #+#             */
-/*   Updated: 2024/05/08 15:24:24 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:56:45 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,11 @@ void	ft_wall_dist(t_game *game)
 	}
 	else
 		game->dis_wall.y = (game->mapy + 1.0 - game->vect.y) * game->distance.y;
+}
+
+void	update_x_direction(t_game *game)
+{
+	game->dis_wall.x += game->distance.x;
+	game->mapx += game->stepx;
+	game->hit_side = X;
 }
