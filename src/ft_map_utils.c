@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:50:20 by crtorres          #+#    #+#             */
-/*   Updated: 2024/10/30 12:17:03 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:00:55 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,64 +14,29 @@
 
 void	alloc_map_mem(t_game *game)
 {
-    int	i;
-    int	j;
-    int	k;
+	int	i;
+	int	j;
+	int	k;
 
-    // Verificar que rows_map y cols_map son válidos
-    if (game->rows_map <= 0 || game->cols_map <= 0)
-    {
-        fprintf(stderr, "Invalid map dimensions\n");
-        exit(EXIT_FAILURE);
-    }
-
-    // Asignar memoria para las filas del mapa
-    game->map = (int **)ft_calloc(game->rows_map +1, sizeof(int *));
-    if (!game->map)
-    {
-        fprintf(stderr, "Memory allocation failed for map rows\n");
-        exit(EXIT_FAILURE);
-    }
-
-    i = -1;
-    j = 0;
-    while (++i < game->rows_map)
-    {
-        // Verificar que i está dentro de los límites
-        if (i >= game->rows_map)
-        {
-            fprintf(stderr, "Index out of bounds\n");
-            exit(EXIT_FAILURE);
-        }
-
-        // Asignar memoria para cada fila del mapa
-		printf("i: %d\n", i);
-		printf("game->cols_map: %d\n", game->cols_map);
-        game->map[i] = (int *)ft_calloc(game->cols_map + 1, sizeof(int));
-		printf("game->map[i]: %p\n", game->map[i]);
-        if (!game->map[i])
-        {
-            fprintf(stderr, "Memory allocation failed for map columns\n");
-            exit(EXIT_FAILURE);
-        }
-
-        k = -1;
-        while (game->line[j] && game->line[j] != '\n')
-        {
-            if (k + 1 >= game->cols_map)
-            {
-                fprintf(stderr, "Map line too long\n");
-                exit(EXIT_FAILURE);
-            }
-
-            if (game->line[j] == '0' || game->line[j] == '1')
-                game->map[i][++k] = game->line[j] - '0';
-            else
-                game->map[i][++k] = -1;
-            j++;
-        }
-        j++;
-    }
+	game->map = (int **)ft_calloc((game->rows_map), sizeof(int *));
+	i = -1;
+	j = 0;
+	while (++i < game->rows_map)
+	{
+		game->map[i] = ft_calloc((game->cols_map), sizeof(int));
+		if (!game->map[i])
+			error_message("Memory allocation failed");
+		k = -1;
+		while (game->line[j] && game->line[j] != '\n')
+		{
+			if (game->line[j] == '0' || game->line[j] == '1')
+				game->map[i][++k] = game->line[j] - 48;
+			else
+				game->map[i][++k] = -1;
+			j++;
+		}
+		j++;
+	}
 }
 
 int	check_extension(char *str, char *ext)

@@ -6,7 +6,7 @@
 /*   By: crtorres <crtorres@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:12:20 by crtorres          #+#    #+#             */
-/*   Updated: 2024/10/30 11:18:36 by crtorres         ###   ########.fr       */
+/*   Updated: 2024/10/31 10:59:44 by crtorres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,9 @@ void	ft_check_borders(t_game *game)
 	while (game->line[i] && game->line[i] != game->coord)
 		i++;
 	alloc_map_mem(game);
-	int row = i / game->cols_map;
-	int col = (i % game->cols_map);
-	
-	// Verificar que los índices están dentro de los límites
-	if (row >= 0 && row < game->rows_map && col >= 0 && col < game->cols_map)
-	{
-	    game->map[row][col] = 0;
-	}
-	else
-	{
-		error_message("Invalid map borders\n");
-	}
+	game->map[(i / game->cols_map)]
+	[(i % game->cols_map) - (i / game->cols_map)] = 0;
+	printf("llega\n");
 	if (game->line[i] && game->line[i] == game->coord)
 	{
 		if ((0 < (i + 1)) && (i + 1 <= game->size) && game->line[i + 1] == '0')
